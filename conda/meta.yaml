@@ -1,0 +1,24 @@
+package:
+  name: anaconda-test
+  version: 1.0
+
+build:
+  string: py{{ python | replace(".", "") }}
+  # Use merge_build_host to ensure the Python interpreter path is not in the
+  # build folder, as it is embedded in the wrapper script.
+  # See https://github.com/conda/conda-build/issues/2677
+  merge_build_host: True
+  skip: True  # [win]
+
+requirements:
+  build:
+    - python {{ python }}
+    - setuptools
+  host:
+    - python {{ python }}
+  run:
+    - python {{ python }}
+
+test:
+  commands:
+    - python3 -c "import anacondatest; anacondatest.f();"

@@ -1,0 +1,3 @@
+import anacondatest
+
+anacondatest.f()
