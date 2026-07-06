@@ -51,8 +51,12 @@ jobs:
       with:
         name: conda-linux
         path: ./dist
+    - uses: anaconda/actions/setup-anaconda-cli@v0.3.1
+      id: setup-anaconda-cli
+      with:
+        version: latest
     - name: Upload to anaconda.org
-      uses: anaconda/actions/upload-package@v0
+      uses: anaconda/actions/upload-package@v0.3.1
       with:
         token: ${{ secrets.ANACONDA_ORG_TOKEN }}
         channel: jakobandersen
