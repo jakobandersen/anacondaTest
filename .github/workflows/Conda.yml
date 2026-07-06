@@ -1,5 +1,16 @@
 name: Build Conda packages
-on: push
+
+on:
+  push:
+    branches:
+    - develop
+    - main
+    tags:
+    - "v*"
+
+concurrency:
+  group: ci-${{ github.ref }}-conda
+
 jobs:
   Conda-Linux:
     runs-on: ubuntu-22.04
@@ -25,3 +36,24 @@ jobs:
         path: |
           conda/conda-bld
         retention-days: 7
+  Conda-Linux-upload:
+    needs: Conda-Linux
+    runs-on: ubuntu-22.04
+    if: github.repository_owner == 'jakobandersen'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        submodules: 'recursive'
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: conda-linux
+        path: ./dist
+    - name: Upload to anaconda.org
+      uses: anaconda/actions/upload-package@v0
+      with:
+        token: ${{ secrets.ANACONDA_ORG_TOKEN }}
+        channel: jakobandersen
+        packages: ./dist/linux-64/*.conda
