@@ -70,4 +70,4 @@ jobs:
         $HOME/.ana/tools/anaconda-cli/bin/anaconda    \
           --token "${{ secrets.ANACONDA_ORG_TOKEN }}" \
           upload --user jakobandersen                 \
-          ./dist/linux-64/*.conda
+          --skip-existing ./dist/linux-64/*.conda
