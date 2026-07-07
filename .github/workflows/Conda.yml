@@ -56,6 +56,15 @@ jobs:
       with:
         version: latest
         tools: anaconda-cli
+    - name: hmm
+      run: |
+        ls
+        echo "==="
+        ls ./dist
+        echo "==="
+        ls ./dist/linux-64
+        echo "==="
+        ls ./dist/linux-64/*.conda
     - name: Upload to anaconda.org
       uses: anaconda/actions/upload-package@v0.3.1
       with:
