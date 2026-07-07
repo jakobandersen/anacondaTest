@@ -65,9 +65,9 @@ jobs:
         ls ./dist/linux-64
         echo "==="
         ls ./dist/linux-64/*.conda
-    - name: Upload to anaconda.org
-      uses: anaconda/actions/upload-package@v0.3.1
-      with:
-        token: ${{ secrets.ANACONDA_ORG_TOKEN }}
-        channel: jakobandersen
-        packages: ./dist/linux-64/*.conda
+    - name: Upload manually
+      run: |
+        $HOME/.ana/tools/anaconda-cli/bin/anaconda    \
+          --token "${{ secrets.ANACONDA_ORG_TOKEN }}" \
+          upload --user jakobandersen                 \
+          ./dist/linux-64/*.conda
